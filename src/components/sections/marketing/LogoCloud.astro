@@ -153,7 +153,7 @@ const grayscaleClass = grayscale
       )
     }
 
-    {/* Marquee variant - animated scroll */}
+    {/* Marquee variant - două grupe identice pentru loop continuu fără săritură */}
     {
       variant === 'marquee' && (
         <div
@@ -161,62 +161,63 @@ const grayscaleClass = grayscale
           style={`--marquee-duration: ${speedDuration[speed]}`}
           data-pause-on-hover={pauseOnHover ? 'true' : 'false'}
         >
-          <div class="logo-marquee-track flex items-center gap-12">
-            {/* First set of logos */}
-            {logos.map((logo) =>
-              logo.href ? (
-                <a
-                  href={logo.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class={`flex-shrink-0 ${grayscaleClass}`}
-                >
-                  <img
-                    src={logo.src}
-                    alt={logo.name}
-                    class={`${sizeClasses[logoSize]} w-auto object-contain`}
-                    loading="lazy"
-                  />
-                </a>
-              ) : (
-                <div class={`flex-shrink-0 ${grayscaleClass}`}>
-                  <img
-                    src={logo.src}
-                    alt={logo.name}
-                    class={`${sizeClasses[logoSize]} w-auto object-contain`}
-                    loading="lazy"
-                  />
-                </div>
-              )
-            )}
-            {/* Duplicate for seamless loop */}
-            {logos.map((logo) =>
-              logo.href ? (
-                <a
-                  href={logo.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class={`flex-shrink-0 ${grayscaleClass}`}
-                  aria-hidden="true"
-                >
-                  <img
-                    src={logo.src}
-                    alt=""
-                    class={`${sizeClasses[logoSize]} w-auto object-contain`}
-                    loading="lazy"
-                  />
-                </a>
-              ) : (
-                <div class={`flex-shrink-0 ${grayscaleClass}`} aria-hidden="true">
-                  <img
-                    src={logo.src}
-                    alt=""
-                    class={`${sizeClasses[logoSize]} w-auto object-contain`}
-                    loading="lazy"
-                  />
-                </div>
-              )
-            )}
+          <div class="logo-marquee-track">
+            <div class="logo-marquee-group flex items-center gap-12 flex-shrink-0">
+              {logos.map((logo) =>
+                logo.href ? (
+                  <a
+                    href={logo.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={`flex-shrink-0 ${grayscaleClass}`}
+                  >
+                    <img
+                      src={logo.src}
+                      alt={logo.name}
+                      class={`${sizeClasses[logoSize]} w-auto object-contain`}
+                      loading="lazy"
+                    />
+                  </a>
+                ) : (
+                  <div class={`flex-shrink-0 ${grayscaleClass}`}>
+                    <img
+                      src={logo.src}
+                      alt={logo.name}
+                      class={`${sizeClasses[logoSize]} w-auto object-contain`}
+                      loading="lazy"
+                    />
+                  </div>
+                )
+              )}
+            </div>
+            <div class="logo-marquee-group flex items-center gap-12 flex-shrink-0" aria-hidden="true">
+              {logos.map((logo) =>
+                logo.href ? (
+                  <a
+                    href={logo.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={`flex-shrink-0 ${grayscaleClass}`}
+                  >
+                    <img
+                      src={logo.src}
+                      alt=""
+                      class={`${sizeClasses[logoSize]} w-auto object-contain`}
+                      loading="lazy"
+                    />
+                  </a>
+                ) : (
+                  <div class={`flex-shrink-0 ${grayscaleClass}`}>
+                    <img
+                      src={logo.src}
+                      alt=""
+                      class={`${sizeClasses[logoSize]} w-auto object-contain`}
+                      loading="lazy"
+                    />
+                  </div>
+                )
+              )}
+            </div>
           </div>
         </div>
       )
@@ -260,6 +261,8 @@ const grayscaleClass = grayscale
 
 <style>
   .logo-marquee-track {
+    display: flex;
+    width: max-content;
     animation: marquee var(--marquee-duration, 25s) linear infinite;
   }
 
@@ -273,6 +276,13 @@ const grayscaleClass = grayscale
     }
     100% {
       transform: translateX(-50%);
+    }
+  }
+
+  /* Pe mobile: marquee mai rapid (ecran îngust = parcurs mai scurt) */
+  @media (max-width: 768px) {
+    .logo-marquee {
+      --marquee-duration: 18s !important;
     }
   }
 

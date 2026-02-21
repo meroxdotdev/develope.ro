@@ -34,23 +34,23 @@ const steps = [
   },
 ];
 
-// 2. Trusted by — logo strip (placeholder logos; replace with real brand SVGs when available)
+// 2. Tehnologii cu care lucrăm — logouri reale (Simple Icons)
 const trustedByLogos = [
-  { name: 'WordPress', src: '/images/logos/logoipsum-1.svg' },
-  { name: 'Shopify', src: '/images/logos/logoipsum-2.svg' },
-  { name: 'Cloudflare', src: '/images/logos/logoipsum-3.svg' },
-  { name: 'Docker', src: '/images/logos/logoipsum-4.svg' },
-  { name: 'Kubernetes', src: '/images/logos/logoipsum-5.svg' },
-  { name: 'Proxmox', src: '/images/logos/logoipsum-6.svg' },
-  { name: 'Tailscale', src: '/images/logos/logoipsum-7.svg' },
-  { name: 'Grafana', src: '/images/logos/logoipsum-8.svg' },
+  { name: 'WordPress', src: '/images/logos/wordpress.svg' },
+  { name: 'Shopify', src: '/images/logos/shopify.svg' },
+  { name: 'Cloudflare', src: '/images/logos/cloudflare.svg' },
+  { name: 'Docker', src: '/images/logos/docker.svg' },
+  { name: 'Kubernetes', src: '/images/logos/kubernetes.svg' },
+  { name: 'Proxmox', src: '/images/logos/proxmox.svg' },
+  { name: 'Tailscale', src: '/images/logos/tailscale.svg' },
+  { name: 'Grafana', src: '/images/logos/grafana.svg' },
 ];
 
-// 4. Integrations — 3 cards
+// 4. Integrări — logouri reale cu culorile produselor
 const integrations = [
   {
     name: 'Cloudflare',
-    logo: '/images/integrations/sentry.svg',
+    logo: '/images/integrations/cloudflare.svg',
     category: 'Performance & Security',
     description: 'CDN global, caching și protecție DDoS integrate automat.',
     featured: true,
@@ -58,7 +58,7 @@ const integrations = [
   },
   {
     name: 'Google Tag Manager',
-    logo: '/images/integrations/google-analytics.svg',
+    logo: '/images/integrations/googletagmanager.svg',
     category: 'Marketing',
     description: 'Integrare pixeli GTM, Facebook Ads și Google Ads fără cod.',
     featured: true,
@@ -66,7 +66,7 @@ const integrations = [
   },
   {
     name: 'WooCommerce / Shopify',
-    logo: '/images/integrations/zapier.svg',
+    logo: '/images/integrations/shopify.svg',
     category: 'eCommerce',
     description: 'Magazin online complet, cu plăți, transport și facturare integrate.',
     featured: true,
@@ -248,13 +248,11 @@ const testimonials = [
     secondaryCTA={{ label: 'Servicii Web', href: '/servicii/web' }}
   />
 
-  <!-- 2. Tehnologii — prima parte a site-ului (nu cu „Cum lucrăm ») -->
+  <!-- 2. Tehnologii — static, cu culorile originale -->
   <LogoCloud
     title="Tehnologii cu care lucrăm"
     logos={trustedByLogos}
-    variant="marquee"
-    speed="slow"
-    pauseOnHover={true}
+    variant="default"
     grayscale={false}
     logoSize="lg"
     background="default"
