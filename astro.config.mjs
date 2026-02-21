@@ -5,8 +5,9 @@ import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
 import { siteConfig } from './src/config';
 
-// Site URL from environment variable with localhost fallback
+// Site URL and base path (pentru GitHub Pages: meroxdotdev.github.io/develope.ro)
 const siteUrl = process.env.SITE_URL || 'http://localhost:4321';
+const base = process.env.BASE_PATH || '/';
 
 // Custom integration to warn about missing environment variables after build
 function envCheckIntegration() {
@@ -28,6 +29,7 @@ function envCheckIntegration() {
 
 export default defineConfig({
   site: siteUrl,
+  base,
   integrations: [
     mdx(),
     icon(),

@@ -1,6 +1,5 @@
-# Build și deploy pe GitHub Pages la push pe master
-# După prima rulare: Settings → Pages → Source = "GitHub Actions"
-# Domeniu custom: Settings → Pages → Custom domain = develope.ro
+# Build și deploy pe GitHub Pages (meroxdotdev.github.io/develope.ro)
+# Settings → Pages → Source = "GitHub Actions"
 
 name: Deploy to GitHub Pages
 
@@ -36,7 +35,8 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          SITE_URL: https://develope.ro
+          SITE_URL: https://meroxdotdev.github.io/develope.ro
+          BASE_PATH: /develope.ro/
 
       - name: Add .nojekyll
         run: touch dist/.nojekyll
