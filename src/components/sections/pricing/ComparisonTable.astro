@@ -1,230 +1,136 @@
 ---
 /**
- * ComparisonTable - Feature comparison table across pricing plans
- *
- * @description
- * Displays a detailed feature comparison table showing which features
- * are included in each pricing plan. Supports checkmarks, x marks,
- * and custom text values. Responsive design collapses to cards on mobile.
- *
- * @example Basic usage
- * ```astro
- * <ComparisonTable
- *   title="Compare plans"
- *   plans={["Hobby", "Pro", "Enterprise"]}
- *   categories={[
- *     {
- *       name: "Core Features",
- *       features: [
- *         { name: "Projects", values: ["3", "Unlimited", "Unlimited"] },
- *         { name: "Team members", values: [false, "5", "Unlimited"] },
- *         { name: "API Access", values: [false, true, true] },
- *       ]
- *     }
- *   ]}
- * />
- * ```
+ * ComparisonTable - 3-column feature comparison for service plans
+ * Row = feature name, columns = Plan 1 | Plan 2 | Plan 3 (checkmark or custom text)
  */
-
 import { Icon } from 'astro-icon/components';
 
-interface Feature {
-  /** Feature name */
-  name: string;
-  /** Values for each plan: true = check, false = x, string = custom text */
-  values: (boolean | string)[];
-  /** Optional tooltip/help text */
-  tooltip?: string;
+export interface PlanCell {
+  /** true = check, false = empty, string = custom text (e.g. "max. 25") */
+  value: boolean | string;
 }
 
-interface FeatureCategory {
-  /** Category name (e.g., "Core Features", "Support") */
-  name: string;
-  /** Features in this category */
-  features: Feature[];
+export interface ComparisonRow {
+  label: string;
+  plan1: boolean | string;
+  plan2: boolean | string;
+  plan3: boolean | string;
 }
 
 interface Props {
-  /** Optional section title */
-  title?: string;
-  /** Optional section subtitle */
+  title: string;
   subtitle?: string;
-  /** Plan names for column headers */
-  plans: string[];
-  /** Feature categories with their features */
-  categories: FeatureCategory[];
-  /** Highlight a specific plan column (0-indexed) */
-  highlightedPlan?: number;
-  /** Section background style */
-  background?: 'default' | 'muted' | 'accent';
+  planNames: [string, string, string];
+  recommendedIndex?: 0 | 1 | 2;
+  rows: ComparisonRow[];
+  includedNote?: string;
+  ctaHref?: string;
+  background?: 'default' | 'muted';
 }
 
-const { title, subtitle, plans, categories, highlightedPlan, background = 'default' } = Astro.props;
+const {
+  title,
+  subtitle,
+  planNames,
+  recommendedIndex = 1,
+  rows,
+  includedNote,
+  ctaHref = '/contact',
+  background = 'default',
+} = Astro.props;
 
-const hasHeading = title || subtitle;
+const bgClass = background === 'muted' ? 'bg-surface' : 'bg-background';
 
-const bgClass = {
-  default: 'bg-background',
-  muted: 'bg-surface',
-  accent: 'bg-primary/5',
-}[background];
-
-function renderValue(value: boolean | string) {
-  if (value === true) {
-    return { type: 'check' as const };
-  } else if (value === false) {
-    return { type: 'x' as const };
-  } else {
-    return { type: 'text' as const, text: value };
-  }
+function cellContent(val: boolean | string) {
+  if (val === true) return 'check';
+  if (val === false) return 'empty';
+  return 'text';
 }
 ---
 
 <section class:list={['py-section', bgClass]}>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    {
-      hasHeading && (
-        <div class="text-center max-w-3xl mx-auto mb-12">
-          {title && <h2 class="text-3xl sm:text-4xl font-bold text-text">{title}</h2>}
-          {subtitle && <p class="mt-4 text-lg text-text-muted">{subtitle}</p>}
-        </div>
-      )
-    }
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-10">
+      <h2 class="text-3xl sm:text-4xl font-bold text-text">{title}</h2>
+      {subtitle && <p class="mt-4 text-lg text-text-muted">{subtitle}</p>}
+      {includedNote && (
+        <p class="mt-2 text-sm text-text-muted italic">{includedNote}</p>
+      )}
+    </div>
 
-    {/* Desktop Table */}
-    <div class="hidden lg:block overflow-x-auto">
-      <table class="w-full border-collapse">
-        {/* Header */}
+    <div class="overflow-x-auto rounded-lg border border-border">
+      <table class="w-full text-left text-sm">
         <thead>
-          <tr>
-            <th
-              class="text-left py-4 px-6 bg-surface border-b border-border font-semibold text-text w-1/4"
-            >
-              Features
-            </th>
+          <tr class="border-b border-border bg-surface">
+            <th class="px-4 py-4 font-semibold text-text w-1/2 sm:w-2/5">Serviciu / Facilitate</th>
             {
-              plans.map((plan, index) => (
+              planNames.map((name, i) => (
                 <th
                   class:list={[
-                    'text-center py-4 px-6 border-b font-semibold',
-                    highlightedPlan === index
-                      ? 'bg-primary/10 border-primary/20 text-primary'
-                      : 'bg-surface border-border text-text',
+                    'px-4 py-4 font-semibold text-text text-center whitespace-nowrap',
+                    i === recommendedIndex && 'bg-primary/10 text-primary',
                   ]}
                 >
-                  {plan}
+                  <span class="block">{name}</span>
+                  {i === recommendedIndex && (
+                    <span class="block mt-1 text-xs font-normal text-primary">Recomandat</span>
+                  )}
                 </th>
               ))
             }
           </tr>
         </thead>
-
-        {/* Body */}
         <tbody>
           {
-            categories.map((category) => (
-              <>
-                {/* Category Header */}
-                <tr>
-                  <td
-                    colspan={plans.length + 1}
-                    class="py-4 px-6 bg-background border-b border-border font-semibold text-text text-sm uppercase tracking-wide"
-                  >
-                    {category.name}
-                  </td>
-                </tr>
-
-                {/* Features */}
-                {category.features.map((feature) => (
-                  <tr class="hover:bg-surface/50 transition-colors">
-                    <td class="py-4 px-6 border-b border-border text-text">
-                      <div class="flex items-center gap-2">
-                        {feature.name}
-                        {feature.tooltip && (
-                          <span class="text-text-muted cursor-help" title={feature.tooltip}>
-                            <Icon name="lucide:help-circle" class="w-4 h-4" />
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    {feature.values.map((value, index) => {
-                      const rendered = renderValue(value);
-                      return (
-                        <td
-                          class:list={[
-                            'text-center py-4 px-6 border-b',
-                            highlightedPlan === index
-                              ? 'bg-primary/5 border-primary/10'
-                              : 'border-border',
-                          ]}
-                        >
-                          {rendered.type === 'check' && (
-                            <Icon name="lucide:check" class="w-5 h-5 text-primary mx-auto" />
-                          )}
-                          {rendered.type === 'x' && (
-                            <Icon name="lucide:minus" class="w-5 h-5 text-text-muted mx-auto" />
-                          )}
-                          {rendered.type === 'text' && (
-                            <span class="text-text font-medium">{rendered.text}</span>
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
-              </>
+            rows.map((row, idx) => (
+              <tr
+                class:list={[
+                  'border-b border-border last:border-b-0',
+                  idx % 2 === 1 && 'bg-surface/50',
+                ]}
+              >
+                <td class="px-4 py-3 text-text-muted">{row.label}</td>
+                <td class="px-4 py-3 text-center">
+                  {row.plan1 === true ? (
+                    <Icon name="lucide:check" class="w-5 h-5 text-primary inline-block" />
+                  ) : row.plan1 === false ? (
+                    <span class="text-border">—</span>
+                  ) : (
+                    <span class="text-text-muted">{row.plan1}</span>
+                  )}
+                </td>
+                <td class="px-4 py-3 text-center">
+                  {row.plan2 === true ? (
+                    <Icon name="lucide:check" class="w-5 h-5 text-primary inline-block" />
+                  ) : row.plan2 === false ? (
+                    <span class="text-border">—</span>
+                  ) : (
+                    <span class="text-text-muted">{row.plan2}</span>
+                  )}
+                </td>
+                <td class="px-4 py-3 text-center">
+                  {row.plan3 === true ? (
+                    <Icon name="lucide:check" class="w-5 h-5 text-primary inline-block" />
+                  ) : row.plan3 === false ? (
+                    <span class="text-border">—</span>
+                  ) : (
+                    <span class="text-text-muted">{row.plan3}</span>
+                  )}
+                </td>
+              </tr>
             ))
           }
         </tbody>
       </table>
     </div>
 
-    {/* Mobile Cards */}
-    <div class="lg:hidden space-y-8">
-      {
-        plans.map((plan, planIndex) => (
-          <div
-            class:list={[
-              'rounded-lg border p-6',
-              highlightedPlan === planIndex
-                ? 'bg-primary/5 border-primary'
-                : 'bg-surface border-border',
-            ]}
-          >
-            <h3 class="text-xl font-semibold text-text mb-6">{plan}</h3>
-
-            {categories.map((category) => (
-              <div class="mb-6 last:mb-0">
-                <h4 class="text-sm font-semibold text-text-muted uppercase tracking-wide mb-3">
-                  {category.name}
-                </h4>
-                <ul class="space-y-3">
-                  {category.features.map((feature) => {
-                    const value = feature.values[planIndex];
-                    const rendered = renderValue(value);
-                    return (
-                      <li class="flex items-center justify-between gap-4">
-                        <span class="text-text">{feature.name}</span>
-                        <span class="shrink-0">
-                          {rendered.type === 'check' && (
-                            <Icon name="lucide:check" class="w-5 h-5 text-primary" />
-                          )}
-                          {rendered.type === 'x' && (
-                            <Icon name="lucide:minus" class="w-5 h-5 text-text-muted" />
-                          )}
-                          {rendered.type === 'text' && (
-                            <span class="text-text font-medium">{rendered.text}</span>
-                          )}
-                        </span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ))}
-          </div>
-        ))
-      }
+    <div class="mt-8 text-center">
+      <a
+        href={ctaHref}
+        class="inline-flex items-center justify-center px-6 py-3 rounded-md bg-primary text-white font-medium hover:bg-primary-dark transition-colors"
+      >
+        Solicită o ofertă
+      </a>
     </div>
   </div>
 </section>

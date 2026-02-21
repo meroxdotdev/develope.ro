@@ -2,41 +2,40 @@
  * Site Configuration
  *
  * @description
- * Core site metadata and branding settings.
- * These values can be customized via environment variables or by editing the defaults below.
+ * Core site metadata and branding settings for Developero.
  */
 
 import type { SocialLinks, LegalConfig } from '../lib/types';
 
 /** Site name displayed in header, footer, and meta tags */
-export const name = import.meta.env.SITE_NAME || 'Virex';
+export const name = import.meta.env.SITE_NAME || 'Developero';
 
 /** Site description for SEO and meta tags */
 export const description =
-  import.meta.env.SITE_DESCRIPTION || 'The modern platform for building and shipping faster';
+  import.meta.env.SITE_DESCRIPTION || 'Soluții IT complete pentru afacerea ta';
 
 /** Production URL of your site (used for sitemap, RSS, canonical URLs) */
-export const url = import.meta.env.SITE_URL || 'http://localhost:4321';
+export const url = import.meta.env.SITE_URL || 'https://develope.ro';
 
 /** Author name for meta tags and copyright */
-export const author = import.meta.env.SITE_AUTHOR || 'Virex Team';
+export const author = import.meta.env.SITE_AUTHOR || 'Developero';
 
-/** Path to logo file (relative to /public) */
-export const logo = '/logo.svg';
+/** Path to logo file (relative to /public). Empty = use text logo with brand font */
+export const logo = '';
 
 /** Path to Open Graph image (relative to /public) */
 export const ogImage = '/images/og-image.png';
 
 /** Social media links */
 export const social: SocialLinks = {
-  twitter: 'https://twitter.com/virex',
-  github: 'https://github.com/virex',
-  discord: 'https://discord.gg/virex',
+  twitter: '',
+  github: '',
+  discord: '',
 };
 
 /** Legal configuration for privacy policy and terms pages */
 export const legal: LegalConfig = {
-  privacyEmail: 'privacy@virex.example.com',
-  legalEmail: 'legal@virex.example.com',
-  lastUpdated: 'December 17, 2024',
+  privacyEmail: 'contact@develope.ro',
+  legalEmail: 'contact@develope.ro',
+  lastUpdated: 'Februarie 2025',
 };

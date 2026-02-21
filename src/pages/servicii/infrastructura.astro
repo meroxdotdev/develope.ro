@@ -1,0 +1,81 @@
+---
+import MarketingLayout from '@/layouts/MarketingLayout.astro';
+import PageHeader from '@sections/content/PageHeader.astro';
+import FeaturesSection from '@sections/marketing/FeaturesSection.astro';
+import CTA from '@sections/marketing/CTA.astro';
+import { siteConfig } from '@/config';
+
+const services = [
+  {
+    icon: 'lucide:network',
+    title: 'Rețelistică / Networking',
+    description: 'Instalări și configurări: router, firewall, switch, segregare rețea.',
+  },
+  {
+    icon: 'lucide:server',
+    title: 'Administrare servere',
+    description: 'Servere bare metal și virtuale — instalare, configurare, hardening.',
+  },
+  {
+    icon: 'lucide:box',
+    title: 'Virtualizare & Containere',
+    description: 'Proxmox, Docker, Kubernetes (K8s) — infrastructură modernă și scalabilă.',
+  },
+  {
+    icon: 'lucide:activity',
+    title: 'Monitorizare',
+    description: 'Grafana, Prometheus, Kuma, Alertmanager — vizibilitate și alerte.',
+  },
+  {
+    icon: 'lucide:shield-check',
+    title: 'VPN',
+    description: 'OpenVPN, Tailscale, WireGuard — acces securizat la rețele și servicii.',
+  },
+  {
+    icon: 'lucide:archive',
+    title: 'Strategie Backup',
+    description: 'Bareos, NAS — backup-uri automate și planuri de recuperare.',
+  },
+  {
+    icon: 'lucide:shield',
+    title: 'Securitate',
+    description: 'Firewall, hardening, scanare vulnerabilități (Nmap, Nessus).',
+  },
+  {
+    icon: 'lucide:cloud',
+    title: 'Servicii Cloud',
+    description: 'Cloud Backup, VM, Storage, Monitorizare, Zero Trust.',
+  },
+  {
+    icon: 'lucide:arrow-right-left',
+    title: 'Migrare Infrastructură & Strategie',
+    description: 'Planificare și executare migrări, optimizare și documentație.',
+  },
+];
+---
+
+<MarketingLayout
+  title={`Servicii Infrastructură — ${siteConfig.name}`}
+  description="Rețelistică, administrare servere, virtualizare (Proxmox, Docker, K8s), monitorizare, VPN, backup, securitate și servicii cloud. Infrastructură IT de încredere."
+>
+  <PageHeader
+    title="Servicii Infrastructură"
+    subtitle="Rețele, servere, virtualizare, monitorizare, securitate și cloud. Construim și întreținem infrastructura IT de care ai nevoie."
+    align="center"
+    maxWidth="lg"
+  />
+
+  <FeaturesSection
+    title="Ce oferim"
+    subtitle="De la rețelistică și servere la containere, monitorizare și migrări."
+    features={services}
+    background="muted"
+  />
+
+  <CTA
+    title="Ai nevoie de infrastructură sau migrare?"
+    description="Discutăm cerințele tale și îți propunem o soluție adaptată."
+    action={{ label: 'Contactează-ne', href: '/contact' }}
+    background="default"
+  />
+</MarketingLayout>

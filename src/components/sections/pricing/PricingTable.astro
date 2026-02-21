@@ -76,6 +76,7 @@ const {
 } = Astro.props;
 
 const hasHeading = title || subtitle;
+const hasNumericPrices = plans.some((p) => p.monthlyPrice !== null);
 
 const bgClass = {
   default: 'bg-background',
@@ -107,51 +108,53 @@ function formatPrice(price: number): string {
       )
     }
 
-    <!-- Billing Toggle -->
-    <div class="flex justify-center mb-12">
-      <div class="inline-flex items-center gap-3 p-1.5 bg-surface border border-border rounded-lg">
-        <button
-          type="button"
-          data-period="monthly"
-          class:list={[
-            'pricing-toggle-btn cursor-pointer px-4 py-2 text-sm font-medium rounded-md transition-all',
-            defaultPeriod === 'monthly'
-              ? 'bg-primary text-white shadow-sm'
-              : 'text-text-muted hover:text-text',
-          ]}
-          aria-pressed={defaultPeriod === 'monthly'}
-        >
-          Monthly
-        </button>
-        <button
-          type="button"
-          data-period="annual"
-          class:list={[
-            'pricing-toggle-btn cursor-pointer px-4 py-2 text-sm font-medium rounded-md transition-all flex items-center gap-2',
-            defaultPeriod === 'annual'
-              ? 'bg-primary text-white shadow-sm'
-              : 'text-text-muted hover:text-text',
-          ]}
-          aria-pressed={defaultPeriod === 'annual'}
-        >
-          Annual
-          {
-            annualDiscount > 0 && (
-              <span
-                class:list={[
-                  'text-xs px-1.5 py-0.5 rounded-full font-semibold',
-                  defaultPeriod === 'annual'
-                    ? 'bg-white/20 text-white'
-                    : 'bg-primary/10 text-primary',
-                ]}
-              >
-                -{annualDiscount}%
-              </span>
-            )
-          }
-        </button>
+    <!-- Billing Toggle (ascuns când toate planurile au preț custom) -->
+    {hasNumericPrices && (
+      <div class="flex justify-center mb-12">
+        <div class="inline-flex items-center gap-3 p-1.5 bg-surface border border-border rounded-lg">
+          <button
+            type="button"
+            data-period="monthly"
+            class:list={[
+              'pricing-toggle-btn cursor-pointer px-4 py-2 text-sm font-medium rounded-md transition-all',
+              defaultPeriod === 'monthly'
+                ? 'bg-primary text-white shadow-sm'
+                : 'text-text-muted hover:text-text',
+            ]}
+            aria-pressed={defaultPeriod === 'monthly'}
+          >
+            Monthly
+          </button>
+          <button
+            type="button"
+            data-period="annual"
+            class:list={[
+              'pricing-toggle-btn cursor-pointer px-4 py-2 text-sm font-medium rounded-md transition-all flex items-center gap-2',
+              defaultPeriod === 'annual'
+                ? 'bg-primary text-white shadow-sm'
+                : 'text-text-muted hover:text-text',
+            ]}
+            aria-pressed={defaultPeriod === 'annual'}
+          >
+            Annual
+            {
+              annualDiscount > 0 && (
+                <span
+                  class:list={[
+                    'text-xs px-1.5 py-0.5 rounded-full font-semibold',
+                    defaultPeriod === 'annual'
+                      ? 'bg-white/20 text-white'
+                      : 'bg-primary/10 text-primary',
+                  ]}
+                >
+                  -{annualDiscount}%
+                </span>
+              )
+            }
+          </button>
+        </div>
       </div>
-    </div>
+    )}
 
     <!-- Pricing Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="pricing-cards">

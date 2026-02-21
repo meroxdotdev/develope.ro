@@ -1,0 +1,34 @@
+---
+import MarketingLayout from '@/layouts/MarketingLayout.astro';
+import PageHeader from '@sections/content/PageHeader.astro';
+import CTA from '@sections/marketing/CTA.astro';
+import { siteConfig } from '@/config';
+---
+
+<MarketingLayout
+  title={`Externalizare IT — ${siteConfig.name}`}
+  description="Externalizare servicii IT pentru companii: suport, administrare și proiecte la cerere. Contactează-ne pentru o ofertă personalizată."
+>
+  <PageHeader
+    title="Externalizare IT"
+    subtitle="Parteneriat IT flexibil pentru companii: suport tehnic, administrare infrastructură și proiecte la cerere. Fără angajamente pe termen lung — adaptăm serviciile la nevoile tale."
+    align="center"
+    maxWidth="lg"
+  />
+
+  <section class="py-section bg-surface">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-lg text-text-muted leading-relaxed">
+        Oferim pachete de externalizare IT adaptate dimensiunii și domeniului tău de activitate.
+        Pentru detalii, prețuri și condiții, contactează-ne și îți trimitem o ofertă personalizată.
+      </p>
+    </div>
+  </section>
+
+  <CTA
+    title="Interesat de externalizare IT?"
+    description="Spune-ne cum putem ajuta și îți răspundem cu o propunere concretă."
+    action={{ label: 'Contactează-ne', href: '/contact' }}
+    background="default"
+  />
+</MarketingLayout>

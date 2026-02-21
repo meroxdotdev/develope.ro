@@ -38,12 +38,15 @@ const legalLinks = filterByFeature(footer.legal);
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-12">
       <!-- Brand Column -->
       <div class="col-span-2 sm:col-span-3 lg:col-span-2 mb-4 lg:mb-0">
-        <a href="/" class="inline-flex items-center gap-2 font-semibold text-lg text-text">
+        <a href="/" class="inline-flex items-center gap-2" aria-label={siteConfig.name}>
           {
             siteConfig.logo ? (
               <img src={siteConfig.logo} alt={siteConfig.name} class="h-8 w-auto" />
             ) : (
-              siteConfig.name
+              <span class="brand-logo">
+                <span class="brand-logo-d-unit" aria-hidden="true">/&gt;</span>
+                <span class="brand-logo-text">evelopero</span>
+              </span>
             )
           }
         </a>
@@ -60,11 +63,16 @@ const legalLinks = filterByFeature(footer.legal);
             )
           }
           {
-            contact.address && (
-              <p>
-                {contact.address.city}, {contact.address.state}, {contact.address.country}
-              </p>
-            )
+            contact.address &&
+              (contact.address.street ||
+                contact.address.city ||
+                contact.address.state) && (
+                <p>
+                  {[contact.address.street, contact.address.city, contact.address.state, contact.address.country]
+                    .filter(Boolean)
+                    .join(', ')}
+                </p>
+              )
           }
         </div>
         <!-- Social Links -->

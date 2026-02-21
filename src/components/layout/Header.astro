@@ -37,12 +37,15 @@ const primaryCTA = headerNav.cta.find((cta) => cta.variant === 'primary');
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
     <div class="flex items-center justify-between h-16">
       <!-- Logo / Site Name -->
-      <a href="/" class="flex items-center gap-2 font-semibold text-lg text-text">
+      <a href="/" class="flex items-center gap-2" aria-label={siteConfig.name}>
         {
           siteConfig.logo ? (
             <img src={siteConfig.logo} alt={siteConfig.name} class="h-8 w-auto" />
           ) : (
-            siteConfig.name
+            <span class="brand-logo">
+              <span class="brand-logo-d-unit" aria-hidden="true">/&gt;</span>
+              <span class="brand-logo-text">evelopero</span>
+            </span>
           )
         }
       </a>
