@@ -85,6 +85,12 @@ interface Props {
   minHeight?: 'default' | 'screen' | 'large';
   /** Content alignment */
   align?: 'center' | 'left';
+  /** Optional Lottie animation JSON URL (e.g. /lottie/Internet.json) — shown beside content */
+  lottieSrc?: string;
+  /** Lottie player width (default 320) */
+  lottieWidth?: number;
+  /** Lottie player height (default 320) */
+  lottieHeight?: number;
 }
 
 const {
@@ -103,6 +109,9 @@ const {
   textColor = 'auto',
   minHeight = 'default',
   align = 'center',
+  lottieSrc,
+  lottieWidth = 320,
+  lottieHeight = 320,
 } = Astro.props;
 
 // Solid background classes
@@ -142,6 +151,9 @@ const alignClass = align === 'left' ? 'text-left' : 'text-center mx-auto';
 const buttonAlignClass = align === 'left' ? 'justify-start' : 'justify-center';
 ---
 
+{lottieSrc && (
+  <script is:inline src="https://unpkg.com/@lottiefiles/lottie-player@1.7.0/dist/lottie-player.js" />
+)}
 <section
   class:list={[
     'relative overflow-hidden',
@@ -189,9 +201,10 @@ const buttonAlignClass = align === 'left' ? 'justify-start' : 'justify-center';
     class:list={[
       'relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
       minHeight === 'screen' && 'w-full',
+      lottieSrc && 'flex flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-12',
     ]}
   >
-    <div class:list={['max-w-3xl', alignClass]}>
+    <div class:list={['max-w-3xl', alignClass, lottieSrc && 'lg:flex-1']}>
       <h1
         class:list={[
           'text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight',
@@ -225,5 +238,17 @@ const buttonAlignClass = align === 'left' ? 'justify-start' : 'justify-center';
         }
       </div>
     </div>
+    {lottieSrc && (
+      <div class="relative z-10 mt-10 lg:mt-0 flex-shrink-0 flex justify-center">
+        <lottie-player
+          src={lottieSrc}
+          mode="normal"
+          autoplay
+          loop
+          style={`width: ${lottieWidth}px; height: ${lottieHeight}px;`}
+          class="max-w-full"
+        />
+      </div>
+    )}
   </div>
 </section>
