@@ -1,0 +1,131 @@
+/* ===== Process entry ===== */
+.process .container {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.process .process-content {
+  width: 60%;
+}
+
+.process .supra-title {
+  margin: 0 0 10px;
+}
+
+.process .btn-wrapper {
+  padding-top: 60px;
+}
+
+.process .supra-title, .process h2, .process p {
+  opacity: 0;
+}
+
+.process .animate {
+  animation: heroFadeUp 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.process-carousel {
+  width: 40%;
+  height: 60vh;
+  overflow: hidden;
+  display: flex;
+  gap: 40px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+
+.process-carousel .carousel-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  flex: 1;
+}
+
+.process-carousel .carousel-col img {
+  filter: grayscale(1);
+}
+
+.process-carousel:hover img {
+  filter: grayscale(0);
+}
+
+.process-carousel .scroll-up.slow {
+  animation: scrollUp 60s linear infinite;
+}
+.process-carousel .scroll-up.fast {
+  animation: scrollUp 60s linear infinite;
+}
+.process-carousel .scroll-down.normal {
+  animation: scrollDown 60s linear infinite;
+}
+
+@keyframes scrollUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-500%);
+  }
+}
+
+@keyframes scrollDown {
+  from {
+    transform: translateY(-500%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .process .container {
+    flex-direction: column;
+    gap: 60px;
+  }
+
+  .process .process-content,
+  .process-carousel {
+    width: 100%;
+  }
+}
+
+/* ===== Process cards ===== */
+.work-item {
+  position: relative;
+  padding: 30px;
+  border: 1px solid rgba(241, 245, 249, 0.15);
+  border-radius: var(--border-radius);
+  opacity: 0;
+}
+
+.work-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(241, 245, 249, 0) 0%, rgb(241, 245, 249) 50%, rgba(241, 245, 249, 0) 100%);
+}
+
+.work-item h3 {
+  padding: 12px 0;
+  font-weight: 400;
+}
+
+.work-item p {
+  padding-bottom: 12px;
+}
+
+.work-item svg {
+  width: 60px;
+  height: 60px;
+  fill: var(--secondary);
+  color: var(--secondary);
+  padding: 15px;
+  background: rgba(241, 245, 249, 0.15);
+  border-radius: 10px;
+}
