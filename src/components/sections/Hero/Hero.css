@@ -1,5 +1,5 @@
 .hero-banner {
-  background-image: url("https://cdn.prod.website-files.com/68b6ff99deb8a7b82b41a88b/68c6dd6d83cf51eb4ffbde5b_Shadow.avif");
+  background: linear-gradient(165deg,rgba(41,163,153,.15) 0%,var(--primary) 60%);
 }
 
 .hero {
@@ -49,10 +49,6 @@
 }
 
 @media (max-width: 768px) {
-  .hero-banner {
-    padding-top: 40px;
-  }
-
   .hero, .hero p {
     max-width: 100%;
   }
